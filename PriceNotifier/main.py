@@ -1,11 +1,32 @@
-# selenium 4
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
+import json
 
-driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
-options = FirefoxOptions()
-driver = webdriver.Firefox(options=options)
+def tabInitializer(tabHandler):
+    for link in fileData["Amazon"]:
+        tabHandler.get(link)
+        driver.switch_to.new_window("tab")
+    for link in fileData["Ebay"]:
+        tabHandler.get(link)
+        driver.switch_to.new_window("tab")
 
+
+# print(fileData["Amazon"]["Amazon Italia"])
+
+with open("Stores.json", 'r') as file:
+    fileData = json.load(file)
+
+driver = webdriver.Firefox(executable_path="/home/paakaer/PycharmProjects/PriceNotifier/drivers/geckodriver")
+tabInitializer(driver)
+'''originalWindow = driver.current_window_handle
+tabInitializer(originalWindow)
+driver.switch_to.new_window("tab")
+driver.get(fileData["Amazon"]["Amazon Italia"])
+for site in fileData["Ebay"]:
+    driver.switch_to.new_window("tab")
+    driver.get(site["url"])
+# driver.get("")
+# driver.switch_to.new_window('tab')
+
+tabInitializer(driver)
+'''
 driver.quit()
