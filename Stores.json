@@ -1,0 +1,18 @@
+{
+  "Amazon": [
+    "https://www.amazon.it",
+    "https://www.amazon.fr",
+    "https://www.amazon.de",
+    "https://www.amazon.co.uk",
+    "https://www.amazon.com"],
+    "Ebay": [
+      "https://www.ebay.it",
+      "https://www.ebay.fr",
+      "https://www.ebay.de",
+      "https://www.ebay.co.uk",
+      "https://www.ebay.com"],
+    "BrickAndMortar": [
+      "https://www.mediaworld.it",
+      "https://www.trony.it",
+      "https://www.comet.it"]
+}

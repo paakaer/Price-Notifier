@@ -1,0 +1,42 @@
+'''
+def keywordSearcherByTag(keyword, driver, searchBar):
+    searchBar = driver.find_element(By.TAG_NAME, searchBar)[4]
+    searchBar.send_keys(keyword + Keys.ENTER)
+    '''
+'''
+        Amazon id="twotabsearchtextbox"
+        Ebay id="gh-ac"
+        Unieuro class="search_element__input js--search-input search--handler" ##NO ID##
+        Media World id="edit-search-term"
+        Trony id="inputSearch"
+        Comet id="searchText"
+    '''
+'''
+def itemSearch(keyword, fTab, driver):
+    for window_handle in driver.window_handles:
+        if window_handle != fTab:
+
+            driver.switch_to.window(window_handle)
+            break
+
+<span class="a-size-base-plus a-color-base a-text-normal">Samsung Galaxy A50 Smartphone, Display 6.4" Super AMOLED, 128 GB Espandibili, RAM 4 GB, Batteria 4000 mAh, 4G, Dual Sim, Android 9 Pie,&nbsp; [Versione Italiana], Black</span>
+
+< span class ="a-size-base-plus a-color-base a-text-normal" > Rugged Telefono 5G Ulefone Armor 11, Dimensity 800 8GB RAM 256GB ROM, Fotocamera Cinque 48MP Visione Notturna, Smartphone Robust Android 10 IP68 IP69K, 6, 1'' Schermo, Ricarica Wireless NFC DUAL SIM < / span >
+<a class="a-link-normal s-underline-text s-underline-link-text s-link-style a-text-normal" href="/Samsung-Smartphone-Espandibili-Batteria-Versione/dp/B07PFQWTGC/ref=sr_1_1?keywords=samsung+m50&amp;qid=1646079008&amp;sprefix=%2Caps%2C67&amp;sr=8-1"><span class="a-size-base-plus a-color-base a-text-normal">Samsung Galaxy A50 Smartphone, Display 6.4" Super AMOLED, 128 GB Espandibili, RAM 4 GB, Batteria 4000 mAh, 4G, Dual Sim, Android 9 Pie,&nbsp; [Versione Italiana], Black</span> </a>
+
+< span
+class ="a-price-whole" > 319, 99 < / span >
+
+
+div.sg - col - 4 - of - 12: nth - child(8)
+div.sg - col - 4 - of - 12: nth - child(9)
+/html/body/div[1]/div[2]/div[1]/div[1]/div/span[3]/div[2]/div[2]/div/div/div/div/div[2]/div[1]/h2/a/span
+/html/body/div[1]/div[2]/div[1]/div[1]/div/span[3]/div[2]/div[2]
+
+/html/body/div[1]/div[2]/div[1]/div[1]/div/span[3]/div[2]/div[3]/div/div/div/div/div/div/div[2]/div[1]/h2/a/span
+
+/html/body/div[1]/div[2]/div[1]/div[1]/div/span[3]/div[2]/div[2]/div/div/div/div/div/div/div[2]/div[1]/h2/a/span
+
+/html/body/div[1]/div[2]/div[1]/div[1]/div/span[3]/div[2]/div[3]
+/html/body/div[1]/div[2]/div[1]/div[1]/div/span[3]/div[2]/div[3]/div/div/div/div/div[2]/div[1]/h2/a/span
+'''
