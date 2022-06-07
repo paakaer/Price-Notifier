@@ -1,85 +1,100 @@
-from selenium import webdriver
-import json
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-import time
-from PIL import Image
-from pytesseract import pytesseract
-i = 0
+from time import sleep
+from typing import List
+import requests
+import typer
+import random
+import logging as logger
+
+logger.basicConfig(format="%(asctime)s %(process)d-%(thread)d %(levelname)s=>%(message)s")
+
+app = typer.Typer()
+
+
+@app.command()
+def get(productName: str, sites: List[str]):
+    if not productName:
+        err = "ERROR, empty string as product name"
+        typer.echo(err)
+        logger.error(err)
+    else:#TODO create an enum
+        for s in sites:
+            if(s.lower() == "amazon"):
+                amazon(s)
+            elif(s.lower() == "ebay"):
+                ebay(s)
+            elif(s.lower() == "unieuro"):
+                unieuro(s)
+            elif(s.lower() == "mediaworld"):
+                mediaWorld(s)
+            elif(s.lower() == "trony"):
+                trony(s)
+            elif(s.lower() == "comet"):
+                comet(s)
+
+def amazon(keyword: str):
+    amazonMarketPlaceList = ["com", "uk", "fr", "de", "it", "es"]
+    searchURL = "https://amazon-price1.p.rapidapi.com/search"
+    priceURL = "https://amazon-price1.p.rapidapi.com/priceReport"
+    
+    for marketPlace in amazonMarketPlaceList:
+        logger.info(amazonConnection(keyword, marketPlace).text)
+        sleepTime = random.uniform(69, 96)
+        sleep(sleepTime)
+        logger.info(f"thread suspend time {sleepTime}")
+
+def amazonConnection(kw: str, 
+                     mp: str, 
+                     sURL: str, 
+                     pURL: str, 
+                     sQuery: dict[str, str], 
+                     pQuery: dict[str, str]
+                    ) -> List[requests.Response]:
+    url = "https://amazon-price1.p.rapidapi.com/search"
+    querystring = {"keywords":kw,"marketplace":mp}
+    headers = {
+        "X-RapidAPI-Host": "amazon-price1.p.rapidapi.com",
+        "X-RapidAPI-Key": "af75f00c9amsh6b0643d68c0508ep103142jsn7156563d2229"
+    }
+    return requests.request("GET", 
+                            sURL, 
+                            headers=headers, 
+                            params=querystring), requests.request("GET", 
+                                                                  pURL, 
+                                                                  headers=headers, 
+                                                                  params=querystring)
+
+    '''
+        ###price reporting
+        import requests
+
+            url = "https://amazon-price1.p.rapidapi.com/priceReport"
+
+            querystring = {"asin":"<REQUIRED>","marketplace":"ES"}
+
+            headers = {
+                "X-RapidAPI-Host": "amazon-price1.p.rapidapi.com",
+                "X-RapidAPI-Key": "af75f00c9amsh6b0643d68c0508ep103142jsn7156563d2229"
+            }
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+    '''
+
+def ebay(keyword: str):
+    pass
+
+def unieuro(keyword: str):
+    pass
+
+def mediaWorld(keyword: str):
+    pass
+
+def trony(keyword: str):
+    pass
+
+def comet(keyword: str):
+    pass
+
 if __name__ == "__main__":
-    def main():
-        fileName = "Stores.json"
-        driver = webdriver.Firefox(executable_path="/home/paakaer/PycharmProjects/PriceNotifier/drivers/geckodriver")
-        firstTab = driver.current_window_handle
-        fileData = fileLoading(fileName)
-        tabInitializer(driver, fileData)
-        time.sleep(11)
-        driver.quit()
-
-
-    def fileLoading(fileName):
-        with open(fileName, 'r') as file:
-            fileData = json.load(file)
-        return fileData
-
-    def tabInitializer(tabHandler, fileData):
-        sID = ["edit-search-term",
-               "inputSearch",
-               "searchText"]
-        kw = "Oppo reno 6 pro"
-        for link in fileData["Amazon"]:
-            tabHandler.get(link)
-            amazonKeywordSearcherByID(kw, tabHandler, "twotabsearchtextbox")
-            screenShot(tabHandler)
-            #getData(tabHandler, kw, "prova.txt", link)
-            tabHandler.switch_to.new_window("tab")
-        for link in fileData["Ebay"]:
-            tabHandler.get(link)
-            keywordSearcherByID(kw, tabHandler, "gh-ac")
-            screenShot(tabHandler)
-            tabHandler.switch_to.new_window("tab")
-        for link, sBar in zip(fileData["BrickAndMortar"], sID):
-            tabHandler.get(link)
-            keywordSearcherByID(kw, tabHandler, sBar)
-            screenShot(tabHandler)
-            tabHandler.switch_to.new_window("tab")
-
-    def amazonKeywordSearcherByID(keyword, driver, searchBarID):
-        searchBar = driver.find_element(By.ID, searchBarID)
-        searchBar.send_keys(keyword + Keys.ENTER)
-        try:
-            cookieAccept = driver.find_element(By.ID, "sp-cc-accept")
-            cookieAccept.click()
-        finally:
-            print("cookie id not found in " + driver.current_url)
-            # searchButton = driver.find_element(By.ID, "nav-search-submit-button")
-
-
-    def keywordSearcherByID(keyword, driver, searchBarID):
-        searchBar = driver.find_element(By.ID, searchBarID)
-        searchBar.send_keys(keyword + Keys.ENTER)
-
-    def itemSelectionAmazon(keyword, driver, itemTag):
-        itemDescription = driver.find_elements(By.CLASS_NAME, "a-size-base-plus")
-        for q in itemDescription:
-            if keyword in q.text:
-                print(driver.find_element(By.CLASS_NAME, "a-price-whole").text)
-            #print(itemPrice)
-        '''else:
-            print(q.text)'''
-
-    def screenShot(driver):
-        time.sleep(9.8)
-        driver.save_screenshot("images/image({}).png".format(i))
-        ++i
-
-main()
-'''
-    #Amazon - 
-        <div class="a-section a-spacing-base">
-        /html/body/div[1]/div[2]/div[1]/div[1]/div/span[3]/div[2]/div[3]/div/div/div/div/div/div
-        /html/body/div[1]/div[2]/div[1]/div[1]/div/span[3]/div[2]/div[3]/div/div/div/div/div/div/div[2]/div[1]/h2/a/span
-        
-        /html/body/div[1]/div[2]/div[1]/div[1]/div/span[3]/div[2]/div[4]/div/div/div/div
-        /html/body/div[1]/div[2]/div[1]/div[1]/div/span[3]/div[2]/div[4]/div/div/div/div/div[2]/div[1]/h2/a/span
-'''
+    app()    
